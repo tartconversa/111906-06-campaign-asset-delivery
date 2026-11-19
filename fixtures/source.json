@@ -1,0 +1,131 @@
+{
+  "stages": [
+    {
+      "generation": 1,
+      "ignore_range": false,
+      "rights": {
+        "PUB-1": {
+          "A": true,
+          "B": true
+        }
+      },
+      "stop_confirm": false
+    },
+    {
+      "generation": 2,
+      "ignore_range": false,
+      "rights": {
+        "PUB-1": {
+          "A": false,
+          "B": true
+        }
+      },
+      "stop_confirm": false
+    },
+    {
+      "generation": 2,
+      "ignore_range": true,
+      "rights": {
+        "PUB-1": {
+          "A": false,
+          "B": true
+        }
+      },
+      "stop_confirm": true
+    }
+  ],
+  "publications": [
+    {
+      "id": "PUB-1",
+      "version": 1,
+      "components": [
+        {
+          "id": "cover",
+          "required": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "id": "audio-v1",
+          "required": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "id": "caption-v1",
+          "required": [
+            "A"
+          ],
+          "depends": [
+            "audio-v1"
+          ]
+        },
+        {
+          "id": "extra",
+          "required": []
+        }
+      ],
+      "not_before": 0
+    },
+    {
+      "id": "PUB-2",
+      "version": 1,
+      "components": [
+        {
+          "id": "audio-v2",
+          "required": [
+            "B"
+          ]
+        },
+        {
+          "id": "caption-v1",
+          "required": [
+            "B"
+          ],
+          "depends": [
+            "audio-v1"
+          ]
+        }
+      ],
+      "not_before": 0
+    }
+  ],
+  "components": {
+    "cover": {
+      "format": "png",
+      "channels": [
+        "A",
+        "B"
+      ]
+    },
+    "audio-v1": {
+      "format": "wav",
+      "channels": [
+        "A",
+        "B"
+      ]
+    },
+    "audio-v2": {
+      "format": "wav",
+      "channels": [
+        "B"
+      ]
+    },
+    "caption-v1": {
+      "format": "vtt",
+      "channels": [
+        "A",
+        "B"
+      ]
+    },
+    "extra": {
+      "format": "zip",
+      "channels": [
+        "A",
+        "B"
+      ]
+    }
+  }
+}

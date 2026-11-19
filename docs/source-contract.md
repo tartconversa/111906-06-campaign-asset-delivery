@@ -1,0 +1,5 @@
+# 素材领取协议
+GET `/catalog`列发布publications、组件components、发布级rights及逻辑now。组件required是该渠道必需清单，depends必须在同一发布找到精确组件号；空required为可选。PUB-2故意缺caption-v1所依赖的audio-v1，是来源声明不完整，不能跨发布补成完整。组件channels与发布rights都须允许，缺失发布许可视为待核而非自动允许，not_before晚于now不可交付。PUB-2未列发布rights因此本身待许可，不影响PUB-1。
+GET `/lease/{component}`领取短期url、etag（摘要，不含引号）、sha256、size；raw响应的ETag带HTTP引号。凭据只在领取时stage有效，过阶段403需重领，新凭据可能指向新字节。GET raw支持Range: bytes=start-end和If-Match；正常206有Content-Range，越界416，If-Match不符412；来源也存在忽略Range返回200的阶段，客户端须识别完整响应。不是把206、200都直接追加到暂存文件。组件为合法PNG、WAV、VTT以及可选ZIP，ZIP内manifest列实际文件，不得只凭解压成功声称齐全。相同原件可共享存储，但发布/渠道关联独立。
+POST `/channel/deliver` JSON reference、publication、channel、components（组件号到摘要映射）登记送交，GET同路径按引用查询。POST `/channel/stop` JSON reference、delivery_reference、reason登记撤用，GET查pending/confirmed；仅confirmed表示渠道完成。重复reference保留首次内容，lose_response=true先保存再503。接收方仅模拟收件，不替调用方判断许可和组件成套性。
+业务可用上述HTTP接口，源文件和内存不是采集入口。检查人员 POST `/__control`，X-Operator: local-operator，stage0正常；stage1 cover字节变化且PUB-1撤A许可，旧下载凭据失效；stage2忽略Range且渠道确认撤用。stage控制仅切换外部来源，不得由产品驱动。`/__inspect`只供核对远端状态。
